@@ -1,5 +1,8 @@
 {
   "name": "greenlight",
+  "description": "Availability monitor for happy coworkers, based on Electron",
+  "license": "MIT",
+  "repository": "https://github.com/Swop/GreenLight",
   "version": "0.1.0",
   "main": "./main.js",
   "scripts": {
