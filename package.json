@@ -9,7 +9,8 @@
     "start": "electron .",
     "debug": "GREENLIGHT_DEBUG=1 electron .",
     "package": "electron-packager ./ GreenLight --platform=darwin --arch=x64 --out ./dist --version 1.2.1 --overwrite --icon=./app/img/app-icon.icns",
-    "postinstall": "electron-rebuild -v 1.2.1 --pre-gyp-fix --force -m . -w node-hid"
+    "postinstall": "electron-rebuild -v 1.2.1 --pre-gyp-fix --force -m . -w node-hid",
+    "test": "eslint app main.js"
   },
   "devDependencies": {
     "electron-packager": "^7.0.3",
