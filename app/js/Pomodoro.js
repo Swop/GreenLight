@@ -1,4 +1,4 @@
-const {ipcMain} = require('electron')
+const {ipcMain, app} = require('electron')
 const notifier = require('node-notifier')
 const path = require('path')
 
@@ -8,12 +8,16 @@ class Pomodoro {
         this.pomodoroState = 'off'
         this.pomodoroCount = 0
 
-        // this.pomodoroDuration = 25
-        // this.shortBreakDuration = 5
-        // this.longBreakDuration = 15
-        this.pomodoroDuration = 1/6
-        this.shortBreakDuration = 1/12
-        this.longBreakDuration = 1/6
+        if (app.debug) {
+            this.pomodoroDuration = 1/6
+            this.shortBreakDuration = 1/12
+            this.longBreakDuration = 1/6
+        } else {
+            this.pomodoroDuration = 25
+            this.shortBreakDuration = 5
+            this.longBreakDuration = 15
+        }
+
         this.pomodoroBeforeLongBreak = 4
 
         this.pomodoroRemainingTime = 0
