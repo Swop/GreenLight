@@ -10,6 +10,8 @@ const {app} = electron
 
 app.setName('GreenLight')
 
+app.debug = Boolean(process.env.GREENLIGHT_DEBUG)
+
 const states = new States()
 
 let pinned = ['jdoe'] // TODO Get favorites from configuration
