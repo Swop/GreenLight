@@ -1,29 +1,38 @@
 const electron = require('electron')
-const path = require('path')
-
+const {AppTray} = require('./app/js/AppTray')
+const {Coworkers} = require('./app/js/Coworkers')
+const {CoworkersLoader} = require('./app/js/CoworkersLoader')
+const {States} = require('./app/js/States')
+const {Luxafor} = require('./app/js/Luxafor')
+const {Pomodoro} = require('./app/js/Pomodoro')
+const {BrowserWindow, ipcMain} = electron
 const {app} = electron
-const {BrowserWindow} = electron
-const {Tray} = electron
-const {Menu} = electron
 
-let appTray = null
+app.setName('GreenLight')
+
+const states = new States()
+
+let pinned = ['jdoe'] // TODO Get favorites from configuration
+const coworkers = new Coworkers(new CoworkersLoader(states), pinned)
+
+const luxafor = new Luxafor()
+luxafor.init()
+const pomodoro = new Pomodoro(states)
 
 app.on('ready', () => {
-    appTray = new Tray(path.join(__dirname, 'app/img/iconTemplate.png'))
-    const contextMenu = Menu.buildFromTemplate([
-        {
-            label: 'Quit',
-            click: () => {
-                appTray.destroy()
-                app.quit()
-            }
-        }
-    ])
+    ipcMain.on('quit-app', () => app.quit())
 
-    appTray.setToolTip('GreenLight')
-    appTray.setContextMenu(contextMenu)
+    new AppTray(coworkers, states, pomodoro)
+    coworkers.reload()
+    ipcMain.emit('state-change', states.get('state-available'))
 
     new BrowserWindow({
         width: 400, height: 225, show: false
     })
+})
+
+app.on('quit', () => {
+    if (null !== luxafor) {
+        luxafor.switchOff()
+    }
 })
