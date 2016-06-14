@@ -9,8 +9,8 @@ node_js:
 addons:
     apt:
         sources:
-            - ubuntu-toolchain-r-test
+        - ubuntu-toolchain-r-test
         packages:
-            - build-essential
-            - gcc-4.8
-            - g++-4.8
+        - build-essential
+        - gcc-4.8
+        - g++-4.8
